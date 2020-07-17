@@ -4,6 +4,9 @@ name: Release builder
 on:
   push:
     tags: 'rc*'
+    branches: 
+      - develop
+      - master
 
 jobs:
   release:
