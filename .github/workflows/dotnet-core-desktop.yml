@@ -1,12 +1,8 @@
 name: Release builder
 
-# Trigger on every new tag that has the format "rcX.Y.W.Z"
 on:
   push:
     tags: 'rc*'
-    branches: 
-      - develop
-      - master
 
 jobs:
   release:
