@@ -12,7 +12,7 @@ jobs:
       SigningCertificate: MyGitHubApp_TemporaryKey.pfx
       Solution_Path: MyGitHubApp.sln
       UWP_Project_Path: MyGitHubApp.csproj
-      UWP_Project_Directory: MyGitHubApp
+      UWP_Project_Directory: .\
 
     steps:
 
