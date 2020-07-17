@@ -34,7 +34,7 @@ jobs:
       uses: Amadevus/pwsh-script@v1
       id: getVersion
       with:
-        script: '("${{steps.tag.outputs.tag}}").Split("rc")[1]'
+        script: '("${{steps.tag.outputs.tag}}").Split("v")[1]'
 
     - name: Checkout
       uses: actions/checkout@v2
