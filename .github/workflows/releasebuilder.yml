@@ -2,7 +2,7 @@ name: Release builder
 
 on:
   push:
-    tags: 'rc*'
+    tags: 'v*'
 
 jobs:
   release:
@@ -58,7 +58,7 @@ jobs:
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
         
     - name: Build the sideload solution
-      run: msbuild $env:Solution_Path /p:Platform=x86 /p:AppxBundle=$env:AppxBundle /p:AppxBundlePlatforms="x86" /p:AppxPackageDir=C:\DeployOutput /p:PackageCertificateKeyFile=$env:SigningCertificate /restore
+      run: msbuild $env:Solution_Path /p:Platform=x86 /p:AppxBundle=$env:AppxBundle /p:AppxBundlePlatforms="x86|x64" /p:AppxPackageDir=C:\DeployOutput /p:PackageCertificateKeyFile=$env:SigningCertificate /restore
       env:
         AppxBundle: Always
         BuildMode: StoreUpload
@@ -79,7 +79,7 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: RC ${{steps.getVersion.outputs.result}}
         draft: false
-        prerelease: true
+        prerelease: false
 
     - name: Update release asset
       id: upload-release-asset
@@ -87,7 +87,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        asset_path: C:\DeployOutput\StorePackage_${{steps.getVersion.outputs.result}}.zip  # Use the full path here because environment variables are not in scope
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: C:\DeployOutput\StorePackage_${{steps.getVersion.outputs.result}}.zip
         asset_name: StorePackage_${{steps.getVersion.outputs.result}}.zip
         asset_content_type: application/zip
