@@ -17,6 +17,13 @@ jobs:
 
     steps:
 
+    - name: Configure Pagefile
+      uses: al-cheb/configure-pagefile-action@v1.2
+      with:
+        minimum-size: 32GB
+        maximum-size: 32GB
+        disk-root: "C:"
+        
     - name: Checkout
       uses: actions/checkout@v2
       with:
